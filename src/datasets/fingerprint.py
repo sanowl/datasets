@@ -1,6 +1,5 @@
 import inspect
 import os
-import random
 import shutil
 import tempfile
 import weakref
@@ -16,6 +15,7 @@ from .naming import INVALID_WINDOWS_CHARACTERS_IN_PATH
 from .utils._dill import dumps
 from .utils.deprecation_utils import deprecated
 from .utils.logging import get_logger
+import secrets
 
 
 if TYPE_CHECKING:
@@ -241,7 +241,7 @@ class Hasher:
 # Fingerprinting
 #################
 
-fingerprint_rng = random.Random()
+fingerprint_rng = secrets.SystemRandom().Random()
 # we show a warning only once when fingerprinting fails to avoid spam
 fingerprint_warnings: Dict[str, bool] = {}
 
