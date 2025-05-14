@@ -89,7 +89,7 @@ class Text(datasets.ArrowBasedBuilder):
                         batch = f.read(self.config.chunksize)
                         if not batch:
                             break
-                        batch += f.readline()  # finish current line
+                        batch += f.readline(5_000_000)  # finish current line
                         # StringIO.readlines, by default splits only on "\n" (and keeps line breaks)
                         batch = StringIO(batch).readlines()
                         if not self.config.keep_linebreaks:
@@ -108,7 +108,7 @@ class Text(datasets.ArrowBasedBuilder):
                         if not new_batch:
                             break
                         batch += new_batch
-                        batch += f.readline()  # finish current line
+                        batch += f.readline(5_000_000)  # finish current line
                         batch = batch.split("\n\n")
                         pa_table = pa.Table.from_arrays(
                             [pa.array([example for example in batch[:-1] if example])], names=pa_table_names

@@ -109,7 +109,7 @@ class Json(datasets.ArrowBasedBuilder):
                             break
                         # Finish current line
                         try:
-                            batch += f.readline()
+                            batch += f.readline(5_000_000)
                         except (AttributeError, io.UnsupportedOperation):
                             batch += readline(f)
                         # PyArrow only accepts utf-8 encoded bytes
