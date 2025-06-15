@@ -37,7 +37,6 @@ from functools import partial, wraps
 from io import BytesIO
 from math import ceil, floor
 from pathlib import Path
-from random import sample
 from typing import (
     TYPE_CHECKING,
     Any,
@@ -129,6 +128,7 @@ from .utils.py_utils import (
 from .utils.stratify import stratified_shuffle_split_generate_indices
 from .utils.tf_utils import dataset_to_tf, minimal_tf_collate_fn, multiprocess_dataset_to_tf
 from .utils.typing import ListLike, PathLike
+import secrets
 
 
 if TYPE_CHECKING:
@@ -272,7 +272,7 @@ class TensorflowDatasetMixin:
 
         test_batches = []
         for _ in range(num_test_batches):
-            indices = sample(range(len(dataset)), test_batch_size)
+            indices = secrets.SystemRandom().sample(range(len(dataset)), test_batch_size)
             test_batch = dataset[indices]
             if cols_to_retain is not None:
                 test_batch = {key: value for key, value in test_batch.items() if key in cols_to_retain}
